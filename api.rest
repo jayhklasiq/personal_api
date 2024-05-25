@@ -1,0 +1,47 @@
+### Get Home Page
+GET http://localhost:3000/
+
+
+### Build Diagnosis Form
+GET http://localhost:3000/dg
+
+### Submit Diagnosis Form
+POST http://localhost:3000/dg
+Content-Type: application/json
+
+{
+  "diagnosis": "Flu",
+  "type": "Virus",
+  "overview": "Influenza is a viral infection that attacks your respiratory system.",
+  "symptoms": "Fever, chills, muscle aches, cough, congestion, runny nose, headaches, and fatigue.",
+  "treatments": "Rest, fluids, antiviral medications.",
+  "specialists": "General practitioner, Infectious disease specialist.",
+  "contagiousMethod": "Airborne droplets, direct contact."
+}
+
+
+# Update Diagnosis (replace {id} with an actual diagnosis ID)
+PUT http://localhost:3000/dg/{id}
+Content-Type: application/json
+
+{
+  "diagnosis": "Updated Diagnosis",
+  "type": "Updated Type",
+  "overview": "Updated Overview",
+  "symptoms": "Updated Symptoms",
+  "treatments": "Updated Treatments",
+  "specialists": "Updated Specialists",
+  "contagiousMethod": "Updated Contagious Method"
+}
+
+### Delete Diagnosis (replace {id} with an actual diagnosis ID)
+DELETE http://localhost:3000/dg/{id}
+
+### View All Diagnoses
+GET http://localhost:3000/getalldg
+
+### View Diagnosis By ID (replace {id} with an actual diagnosis ID)
+GET http://localhost:3000/dg/{id}
+
+### Submission Success Page
+GET http://localhost:3000/success

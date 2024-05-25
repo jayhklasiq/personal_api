@@ -1,0 +1,39 @@
+{
+	"name": "personal_api",
+	"version": "1.0.0",
+	"description": "This is a Node.JS API project.",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node app.js",
+		"dev": "nodemon app.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jayhklasiq/API.git"
+	},
+	"keywords": [
+		"[\"API\"",
+		"\"Node.JS\"",
+		"\"Backend\"]"
+	],
+	"author": "Joshua O. Olaoye",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/jayhklasiq/API/issues"
+	},
+	"homepage": "https://github.com/jayhklasiq/API#readme",
+	"dependencies": {
+		"dotenv": "^16.4.5",
+		"ejs": "^3.1.10",
+		"express": "^4.19.2",
+		"express-ejs-layouts": "^2.5.1",
+		"express-graphql": "^0.12.0",
+		"graphql": "^15.8.0",
+		"mongodb": "^6.6.2",
+		"nodemon": "^3.1.0",
+		"swagger": "^0.0.1",
+		"swagger-autogen": "^2.23.7",
+		"swagger-ui-express": "^5.0.0"
+	}
+}
