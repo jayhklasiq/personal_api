@@ -1,7 +1,7 @@
 const { buildSchema } = require('graphql');
 
 const schema = buildSchema(`
-   type Diagnosis {
+  type Diagnosis {
     id: ID!
     diagnosis: String!
     type: String!
@@ -12,15 +12,12 @@ const schema = buildSchema(`
     contagiousMethod: String!
   }
 
-
-    type Query {
+  type Query {
     getDiagnosis(id: ID!): Diagnosis
     getDiagnoses: [Diagnosis]
   }
 
-
-
-    type Mutation {
+  type Mutation {
     createDiagnosis(
       diagnosis: String!
       type: String!
@@ -30,7 +27,20 @@ const schema = buildSchema(`
       specialists: String!
       contagiousMethod: String!
     ): Diagnosis
+
+    updateDiagnosis(
+      id: ID!
+      diagnosis: String
+      type: String
+      overview: String
+      symptoms: String
+      treatments: String
+      specialists: String
+      contagiousMethod: String
+    ): Diagnosis
+
+    deleteDiagnosis(id: ID!): Boolean
   }
-`)
+`);
 
 module.exports = schema;

@@ -1,0 +1,115 @@
+<div class="container">
+  <h1 class="text-center"> <%= title %> </h1>
+  <form id="diagnosisForm" method="PUT" action="/dg/update/<%= diagnosis._id %>">
+    <div class="form-group">
+      <label for="diagnosis">Diagnosis</label>
+      <input type="text" class="form-control" id="diagnosis" name="diagnosis"
+        value=" <%= diagnosis.diagnosis %>"
+        required>
+      <div class="invalid-feedback">Please provide a diagnosis.</div>
+    </div>
+
+    <div class="form-group">
+      <label>Type</label>
+      <div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="type"
+            id="infection" value="Infection"
+            <%=diagnosis.type === 'Infection' ? 'checked' : '' %> required>
+          <label class="form-check-label" for="infection">Infection</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="type" id="virus"
+            value="Virus"
+            <%=diagnosis.type === 'Virus' ? 'checked' : '' %> required>
+          <label class="form-check-label" for="virus">Virus</label>
+        </div>
+      </div>
+      <div class="invalid-feedback d-block">Please select an option.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="overview">Overview</label>
+      <textarea class="form-control" id="overview" name="overview" rows="3"
+        required><%- diagnosis.overview %></textarea>
+      <div class="invalid-feedback">Please provide an overview.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="symptoms">Symptoms</label>
+      <input type="text" class="form-control" id="symptoms" name="symptoms"
+        value=" <%= diagnosis.symptoms %>"
+        required>
+      <div class="invalid-feedback">Please provide symptoms.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="treatments">Treatments</label>
+      <input type="text" class="form-control" id="treatments" name="treatments"
+        value=" <%= diagnosis.treatments %>"
+        required>
+      <div class="invalid-feedback">Please provide treatments.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="specialists">Specialists</label>
+      <input type="text" class="form-control" id="specialists"
+        name="specialists" value=" <%= diagnosis.specialists %>" required>
+      <div class="invalid-feedback">Please provide specialists.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="contagiousMethod">Contagious Method</label>
+      <input type="text" class="form-control" id="contagiousMethod"
+        value=" <%= diagnosis.contagiousMethod %>"
+        name="contagiousMethod" required>
+      <div class="invalid-feedback">Please provide a contagious method.</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block mt-4">Submit</button>
+  </form>
+</div>
+
+<!-- <script>
+ document.getElementById('updateDiagnosisForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const form = event.target;
+  const formData = new FormData(form);
+  const diagnosisData = {};
+  formData.forEach((value, key) => {
+    diagnosisData[key] = value;
+  });
+
+  const id = form.getAttribute('data-id'); // Assuming you pass the ID as a data attribute to the form
+
+  const query = `
+    mutation UpdateDiagnosis($id: ID!, $diagnosis: String!, $type: String!, $overview: String!, $symptoms: String!, $treatments: String!, $specialists: String!, $contagiousMethod: String!) {
+      updateDiagnosis(id: $id, diagnosis: $diagnosis, type: $type, overview: $overview, symptoms: $symptoms, treatments: $treatments, specialists: $specialists, contagiousMethod: $contagiousMethod) {
+        success
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch('/graphql', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, variables: { id, ...diagnosisData } })
+    });
+
+    const result = await response.json();
+    console.log(result); // Log the response to debug
+
+    if (result.errors) {
+      console.error(result.errors); // Log the errors
+      alert('Error updating form');
+    } else {
+      console.log('Form updated successfully');
+      window.location.href = '/success';
+    }
+  } catch (error) {
+    console.error('Error updating form:', error);
+    alert('Error updating form');
+  }
+});
+</script> -->

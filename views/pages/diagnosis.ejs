@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="text-center">Diagnosis</h1>
+  <h1 class="text-center"> <%= title %></h1>
   <form id="diagnosisForm" method="POST" action="/dg">
     <div class="form-group">
       <label for="diagnosis">Diagnosis</label>
@@ -64,7 +64,7 @@
   </form>
 </div>
 
-<script>
+<!-- <script>
  document.getElementById('diagnosisForm').addEventListener('submit', async (event) => {
   event.preventDefault();
   const form = event.target;
@@ -104,5 +104,4 @@
     alert('Error submitting form');
   }
 });
-
-</script>
+</script> -->

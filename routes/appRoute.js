@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/appController');
+const { validateDiagnosis } = require('../controllers/validator');
 
 /**
  * @swagger
@@ -68,11 +69,32 @@ router.get('/dg', controller.buildDiagnosisForm);
  *       500:
  *         description: Error submitting form.
  */
-router.post('/dg', controller.diagnosisFormSubmitted);
+router.post('/dg', validateDiagnosis, controller.diagnosisFormSubmitted);
 
 /**
  * @swagger
- * /dg/{id}:
+ * /dg/update/{id}:
+ *   get:
+ *     summary: Build update diagnosis form
+ *     description: Renders the update diagnosis form.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The diagnosis ID.
+ *     responses:
+ *       200:
+ *         description: Update diagnosis form page.
+ *       404:
+ *         description: Diagnosis not found.
+ */
+router.get('/dg/update/:id', controller.buildUpdateDiagnosisForm);
+
+/**
+ * @swagger
+ * /dg/update/{id}:
  *   put:
  *     summary: Update a diagnosis
  *     description: Updates a diagnosis by ID.
@@ -112,13 +134,11 @@ router.post('/dg', controller.diagnosisFormSubmitted);
  *       500:
  *         description: Error updating diagnosis.
  */
-router.put('/dg/:id', (req, res) => {
-  res.status(501).send('Not Implemented');
-});
+router.put('/dg/update/:id', validateDiagnosis, controller.updatedDiagnosisFormSubmitted);
 
 /**
  * @swagger
- * /dg/{id}:
+ * /dg/delete/{id}:
  *   delete:
  *     summary: Delete a diagnosis
  *     description: Deletes a diagnosis by ID.
@@ -137,9 +157,7 @@ router.put('/dg/:id', (req, res) => {
  *       500:
  *         description: Error deleting diagnosis.
  */
-router.delete('/dg/:id', (req, res) => {
-  res.status(501).send('Not Implemented');
-});
+router.delete('/dg/delete/:id', controller.deleteDiagnosis);
 
 /**
  * @swagger
@@ -184,7 +202,6 @@ router.get('/dg/:id', controller.viewDiagnosisById);
  *       200:
  *         description: Submission success page.
  */
-router.get('/success', controller.submissionSuccess);
+router.get('/success', controller.success);
 
-// Export the router
 module.exports = router;

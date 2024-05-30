@@ -15,12 +15,39 @@ const resolvers = {
     return collection.find({}).toArray();
   },
 
-  //creates diagnosis and saves it in Database
+  // Creates diagnosis and saves it in Database
   createDiagnosis: async ({ diagnosis, type, overview, symptoms, treatments, specialists, contagiousMethod }) => {
     const { collection } = await mainConnect();
     const result = await collection.insertOne({ diagnosis, type, overview, symptoms, treatments, specialists, contagiousMethod });
     return { id: result.insertedId, result };
+  },
+
+  // Updates an existing diagnosis in the database
+  updateDiagnosis: async ({ id, diagnosis, type, overview, symptoms, treatments, specialists, contagiousMethod }) => {
+    const { collection } = await mainConnect();
+    const result = await collection.updateOne(
+      { _id: new ObjectId(id) },
+      {
+        $set: {
+          diagnosis,
+          type,
+          overview,
+          symptoms,
+          treatments,
+          specialists,
+          contagiousMethod
+        }
+      }
+    );
+    return result.modifiedCount > 0 ? { id, success: true } : { id, success: false };
+  },
+
+  // Deletes a diagnosis from the database
+  deleteDiagnosis: async ({ id }) => {
+    const { collection } = await mainConnect();
+    const result = await collection.deleteOne({ _id: new ObjectId(id) });
+    return result.deletedCount > 0 ? { id, success: true } : { id, success: false };
   }
 };
 
-module.exports = resolvers
+module.exports = resolvers;
