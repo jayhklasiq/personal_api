@@ -5,7 +5,7 @@
 		"description": "Contacts API Documentation",
 		"version": "1.0.1"
 	},
-	"host": "localhost:5500",
+	"host": "diagnosis-api-gk2d.onrender.com",
 	"basePath": "/",
 	"schemes": ["https"],
 	"paths": {
