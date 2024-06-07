@@ -1,0 +1,33 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h1 class="text-center">Login</h1>
+      <form action="/auth/login" method="post">
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" class="form-control" id="email" name="email"
+            required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" class="form-control" id="password"
+            name="password" required>
+        </div>
+        <button type="submit"
+          class="btn mt-2 btn-primary btn-block">Login</button>
+      </form>
+      <p class="text-center mt-3">Don't have an account? <a
+          href="/register">Register here</a>.</p>
+      <div class="oauth-login text-center mt-4">
+        <h2>Or login with</h2>
+        <a href="/auth/google"
+          class="btn btn-outline-danger btn-block my-2"><img
+            src="/images/google-logo.png" alt="Google Login" class="mr-2">
+          Google</a>
+        <a href="/auth/github" class="btn btn-outline-dark btn-block my-2"><img
+            src="/images/github-logo.png" alt="GitHub Login" class="mr-2">
+          GitHub</a>
+      </div>
+    </div>
+  </div>
+</div>

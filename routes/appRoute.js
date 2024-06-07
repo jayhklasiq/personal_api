@@ -204,4 +204,28 @@ router.get('/dg/:id', controller.viewDiagnosisById);
  */
 router.get('/success', controller.success);
 
+/**
+ * @swagger
+ * /login:
+ *   get:
+ *     summary: Load login page
+ *     description: Returns the login page for user authentication.
+ *     responses:
+ *       200:
+ *         description: Login page content.
+ */
+router.get('/login', controller.loadLoginpage);
+
+/**
+ * @swagger
+ * /register:
+ *   get:
+ *     summary: Load register page
+ *     description: Returns the register page for user registration.
+ *     responses:
+ *       200:
+ *         description: Register page content.
+ */
+router.get('/register', controller.loadRegisterPage);
+
 module.exports = router;

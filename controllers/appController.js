@@ -141,6 +141,31 @@ function success(req, res, next) {
   }
 }
 
+
+/* ****************************************
+*  Deliver Login Page
+* *************************************** */
+function loadLoginpage(req, res, next) {
+  try {
+    res.render('pages/login', { title: 'Login' });
+  } catch {
+    next(createError(500, 'Error rendering login page'));
+  }
+}
+
+
+/* ****************************************
+*  Deliver Login Page
+* *************************************** */
+const loadRegisterPage = (req, res) => {
+  try {
+    res.render('pages/register', { title: 'Register' });
+  } catch {
+    next(createError(500, 'Error rendering register page.'))
+  }
+};
+
+
 module.exports = {
   buildDiagnosisForm,
   diagnosisFormSubmitted,
@@ -149,5 +174,7 @@ module.exports = {
   buildUpdateDiagnosisForm,
   updatedDiagnosisFormSubmitted,
   deleteDiagnosis,
-  success
+  success,
+  loadLoginpage,
+  loadRegisterPage
 };

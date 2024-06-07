@@ -21,12 +21,12 @@ Content-Type: application/json
 
 
 ### Update Diagnosis (replace {id} with an actual diagnosis ID)
-PUT http://localhost:5500/dg/update/66523e7eedbde7c95dd9b0df
+PUT http://localhost:5500/dg/update/6658ce04fd89f81d2e9d9ac2
 Content-Type: application/json
 
 {
   "diagnosis": "Updated Diagnosis",
-  "type": "Updated Type",
+  "type": "Infection",
   "overview": "Updated Overview",
   "symptoms": "Updated Symptoms",
   "treatments": "Updated Treatments",
@@ -35,7 +35,7 @@ Content-Type: application/json
 }
 
 ### Delete Diagnosis (replace {id} with an actual diagnosis ID)
-DELETE http://localhost:5500/dg/delete/66523e7eedbde7c95dd9b0df
+DELETE http://localhost:5500/dg/delete/6658ce04fd89f81d2e9d9ac2
 
 ### View All Diagnoses
 GET http://localhost:5500/getalldg
