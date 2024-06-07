@@ -141,7 +141,6 @@ function success(req, res, next) {
   }
 }
 
-
 /* ****************************************
 *  Deliver Login Page
 * *************************************** */
@@ -153,7 +152,6 @@ function loadLoginpage(req, res, next) {
   }
 }
 
-
 /* ****************************************
 *  Deliver Login Page
 * *************************************** */
@@ -164,7 +162,6 @@ const loadRegisterPage = (req, res) => {
     next(createError(500, 'Error rendering register page.'))
   }
 };
-
 
 module.exports = {
   buildDiagnosisForm,
