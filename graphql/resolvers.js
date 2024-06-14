@@ -1,3 +1,4 @@
+//graphql/resolver.js
 const { ObjectId } = require('mongodb');
 const mainConnect = require('../data/connect');
 
@@ -47,6 +48,20 @@ const resolvers = {
     const { collection } = await mainConnect();
     const result = await collection.deleteOne({ _id: new ObjectId(id) });
     return result.deletedCount > 0 ? { id, success: true } : { id, success: false };
+  },
+
+  // Creates user and saves it in Database
+  createUser: async ({ username, email, googleId }) => {
+    const { userfile } = await mainConnect();
+    const result = await userfile.insertOne({ username, email, googleId });
+    return { id: result.insertedId, username, email };
+  },
+
+  // Find a user using the email
+  getUser: async ({ email }) => {
+    const { userfile } = await mainConnect();
+    const result = await userfile.findOne({ email: email });
+    return result;
   }
 };
 

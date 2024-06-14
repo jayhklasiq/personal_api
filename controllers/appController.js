@@ -6,7 +6,7 @@ const resolver = require('../graphql/resolvers');
 * *************************************** */
 function buildDiagnosisForm(req, res, next) {
   try {
-    res.render('pages/dg', { title: 'Diagnosis' });
+    res.render('pages/diagnosis', { title: 'Diagnosis' });
   } catch (error) {
     next(createError(500, 'Error rendering diagnosis form'));
   }

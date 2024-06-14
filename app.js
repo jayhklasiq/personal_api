@@ -1,15 +1,21 @@
+// app.js
+require('dotenv').config();
 const express = require('express');
 const expressLayout = require('express-ejs-layouts');
 const bodyParser = require('body-parser');
 const { graphqlHTTP } = require('express-graphql');
 const schema = require('./graphql/schema');
 const resolvers = require('./graphql/resolvers');
-const connectDB = require('./data/connect')
+const connectDB = require('./data/connect');
 const appRoutes = require('./routes/appRoute');
-require('dotenv').config();
 const swaggerOutput = require('./swagger-output.json');
 const swaggerUi = require('swagger-ui-express');
+const path = require('path');
+const passport = require('passport');
+const session = require('express-session');
 
+// Load Passport configuration
+require('./utilities/auth');
 
 const app = express();
 const PORT = 5500;
@@ -29,11 +35,26 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Connect to MongoDB
 connectDB();
 
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Serve Swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput));
 
+// Initialize and configure session middleware
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
+
+// Initialize Passport and configure it to use sessions
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Define Routes
 app.use('/', appRoutes);
+
 // GraphQL endpoint
 app.use('/graphql', graphqlHTTP({
   schema: schema,

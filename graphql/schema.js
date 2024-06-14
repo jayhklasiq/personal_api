@@ -12,6 +12,13 @@ const schema = buildSchema(`
     contagiousMethod: String!
   }
 
+  type User {
+    id: ID!
+    username: String!
+    email: String!
+    googleId: String!
+  }
+
   type Query {
     getDiagnosis(id: ID!): Diagnosis
     getDiagnoses: [Diagnosis]
@@ -27,6 +34,12 @@ const schema = buildSchema(`
       specialists: String!
       contagiousMethod: String!
     ): Diagnosis
+
+    createUser(
+      username: String!
+      email: String!
+      googleId: String!
+    ): User
 
     updateDiagnosis(
       id: ID!

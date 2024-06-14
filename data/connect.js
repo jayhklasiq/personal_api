@@ -10,7 +10,8 @@ async function mainConnect() {
     const database = mongoConnect.db('Diagnosis');
     return {
       database,
-      collection: database.collection('symptoms')
+      collection: database.collection('symptoms'),
+      userfile: database.collection('user')
     };
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);

@@ -2,6 +2,15 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/appController');
 const { validateDiagnosis } = require('../controllers/validator');
+const passport = require('passport');
+
+// Authentication middleware
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
 
 /**
  * @swagger
@@ -27,7 +36,7 @@ router.get('/', (req, res) => {
  *       200:
  *         description: Diagnosis form page.
  */
-router.get('/dg', controller.buildDiagnosisForm);
+router.get('/dg', ensureAuthenticated, controller.buildDiagnosisForm);
 
 /**
  * @swagger
@@ -69,7 +78,7 @@ router.get('/dg', controller.buildDiagnosisForm);
  *       500:
  *         description: Error submitting form.
  */
-router.post('/dg', validateDiagnosis, controller.diagnosisFormSubmitted);
+router.post('/dg', ensureAuthenticated, validateDiagnosis, controller.diagnosisFormSubmitted);
 
 /**
  * @swagger
@@ -90,7 +99,7 @@ router.post('/dg', validateDiagnosis, controller.diagnosisFormSubmitted);
  *       404:
  *         description: Diagnosis not found.
  */
-router.get('/dg/update/:id', controller.buildUpdateDiagnosisForm);
+router.get('/dg/update/:id', ensureAuthenticated, controller.buildUpdateDiagnosisForm);
 
 /**
  * @swagger
@@ -134,7 +143,7 @@ router.get('/dg/update/:id', controller.buildUpdateDiagnosisForm);
  *       500:
  *         description: Error updating diagnosis.
  */
-router.put('/dg/update/:id', validateDiagnosis, controller.updatedDiagnosisFormSubmitted);
+router.put('/dg/update/:id', ensureAuthenticated, validateDiagnosis, controller.updatedDiagnosisFormSubmitted);
 
 /**
  * @swagger
@@ -157,7 +166,7 @@ router.put('/dg/update/:id', validateDiagnosis, controller.updatedDiagnosisFormS
  *       500:
  *         description: Error deleting diagnosis.
  */
-router.delete('/dg/delete/:id', controller.deleteDiagnosis);
+router.delete('/dg/delete/:id', ensureAuthenticated, controller.deleteDiagnosis);
 
 /**
  * @swagger
@@ -227,5 +236,33 @@ router.get('/login', controller.loadLoginpage);
  *         description: Register page content.
  */
 router.get('/register', controller.loadRegisterPage);
+
+/**
+ * @swagger
+ * /auth/google:
+ *   get:
+ *     summary: Google OAuth login
+ *     description: Initiates Google OAuth login process.
+ *     responses:
+ *       302:
+ *         description: Redirects to Google for authentication.
+ */
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+/**
+ * @swagger
+ * /auth/google/callback:
+ *   get:
+ *     summary: Google OAuth callback
+ *     description: Handles Google OAuth callback and redirects based on authentication result.
+ *     responses:
+ *       302:
+ *         description: Redirects based on authentication result.
+ */
+router.get('/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/dg',
+    failureRedirect: '/login'
+  }));
 
 module.exports = router;
