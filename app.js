@@ -1,4 +1,3 @@
-// app.js
 require('dotenv').config();
 const express = require('express');
 const expressLayout = require('express-ejs-layouts');
@@ -18,7 +17,6 @@ const session = require('express-session');
 require('./utilities/auth');
 
 const app = express();
-const PORT = 5500;
 
 // Set the view engine to EJS & set it to use EJS layouts
 app.set('view engine', 'ejs');
@@ -45,7 +43,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput));
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: { secure: false } // Set to true if using HTTPS
 }));
 
 // Initialize Passport and configure it to use sessions
@@ -62,6 +61,14 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true // Enable the GraphiQL UI
 }));
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+// Start the server
+const port = 5500
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
