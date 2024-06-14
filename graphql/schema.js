@@ -1,58 +1,66 @@
 const { buildSchema } = require('graphql');
 
 const schema = buildSchema(`
-  type Diagnosis {
+   type Diagnosis {
     id: ID!
     diagnosis: String!
     type: String!
-    overview: String!
-    symptoms: String!
-    treatments: String!
-    specialists: String!
-    contagiousMethod: String!
+    overview: String
+    symptoms: [String]
+    treatments: [String]
+    specialists: [String]
+    contagiousMethod: String
   }
 
   type User {
     id: ID!
     username: String!
     email: String!
-    googleId: String!
+    googleId: String
   }
 
   type Query {
-    getDiagnosis(id: ID!): Diagnosis
-    getDiagnoses: [Diagnosis]
+    getDiagnosisById(id: ID!): Diagnosis
+    getAllDiagnosis: [Diagnosis]
+    getUser(email: String!): User
+    getUserById(id: ID!): User
   }
 
   type Mutation {
     createDiagnosis(
-      diagnosis: String!
-      type: String!
-      overview: String!
-      symptoms: String!
-      treatments: String!
-      specialists: String!
-      contagiousMethod: String!
-    ): Diagnosis
-
-    createUser(
-      username: String!
-      email: String!
-      googleId: String!
-    ): User
-
-    updateDiagnosis(
-      id: ID!
-      diagnosis: String
-      type: String
-      overview: String
-      symptoms: String
-      treatments: String
-      specialists: String
+      diagnosis: String!,
+      type: String!,
+      overview: String,
+      symptoms: [String],
+      treatments: [String],
+      specialists: [String],
       contagiousMethod: String
     ): Diagnosis
 
-    deleteDiagnosis(id: ID!): Boolean
+    updateDiagnosis(
+      id: ID!,
+      diagnosis: String,
+      type: String,
+      overview: String,
+      symptoms: [String],
+      treatments: [String],
+      specialists: [String],
+      contagiousMethod: String
+    ): UpdateResponse
+
+    deleteDiagnosis(id: ID!): DeleteResponse
+
+    createUser(username: String!, email: String!, googleId: String!): User
+  }
+
+  type UpdateResponse {
+    id: ID!
+    success: Boolean!
+  }
+
+  type DeleteResponse {
+    id: ID!
+    success: Boolean!
   }
 `);
 

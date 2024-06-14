@@ -1,10 +1,8 @@
-// utilities/auth.js
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const resolver = require('../graphql/resolvers'); // Import createUser function
+const resolver = require('../graphql/resolvers');
 const connectDB = require('../data/connect');
-
-
+const { ObjectId } = require('mongodb'); // Import ObjectId
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
@@ -27,8 +25,7 @@ passport.use(new GoogleStrategy({
       } else {
         console.log("User already exists:", user._id);
       }
-
-      console.log("Profile:", profile);
+      // console.log("Profile:", profile);
       return done(null, user);
     } catch (error) {
       console.error("Error in authentication:", error);
@@ -38,13 +35,13 @@ passport.use(new GoogleStrategy({
 ));
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user._id);
 });
 
 passport.deserializeUser(async (id, done) => {
   try {
     // Fetch user from MongoDB using id
-    const user = { id: id, displayName: 'User' }; // Replace with actual user fetching logic
+    const user = await resolver.getUserById({ id: new ObjectId(id) }); // Use new ObjectId(id)
     done(null, user);
   } catch (error) {
     done(error);

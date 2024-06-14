@@ -1,4 +1,3 @@
-//graphql/resolver.js
 const { ObjectId } = require('mongodb');
 const mainConnect = require('../data/connect');
 
@@ -61,6 +60,13 @@ const resolvers = {
   getUser: async ({ email }) => {
     const { userfile } = await mainConnect();
     const result = await userfile.findOne({ email: email });
+    return result;
+  },
+
+  // Find a user using the ID
+  getUserById: async ({ id }) => {
+    const { userfile } = await mainConnect();
+    const result = await userfile.findOne({ _id: new ObjectId(id) });
     return result;
   }
 };
